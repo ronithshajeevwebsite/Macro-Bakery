@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Banana Cinnamon Ice Cream | Macro Bakery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Macro Bakery</div>
+
+        <div class="nav-links">
+    <a href="menu.html">Menu</a>
+    <a href="order.html">Order</a>
+    <a href="about.html">About Us</a>
+</div>
+    </nav>
+
+    <main class="product-page">
+
+        <div class="product-content">
+
+            <div class="product-image">
+                🍌
+            </div>
+
+            <div class="product-info">
+
+                <p class="small-title">
+                    ICE CREAM
+                </p>
+
+                <h1>
+                    Banana Cinnamon Ice Cream
+                </h1>
+
+                <p>
+                    Creamy banana flavor meets the warm,
+                    comforting taste of cinnamon in this
+                    smooth and irresistible frozen treat.
+                </p>
+
+                <p>
+                    Every spoonful brings a sweet banana
+                    flavor followed by a gentle cinnamon
+                    finish, creating a cozy dessert that's
+                    especially delicious when served cold
+                    and creamy.
+                </p>
+
+                <h2>$5</h2>
+                <div class="quantity-box">
+    <label for="quantity">Quantity</label>
+
+    <div class="quantity-controls">
+        <button type="button" onclick="changeQuantity(-1)">−</button>
+
+        <input type="number" id="quantity" value="1" min="1">
+
+        <button type="button" onclick="changeQuantity(1)">+</button>
+    </div>
+
+    <button class="add-cart-button" onclick="addToCart()">
+        Add to Cart
+    </button>
+</div>
+                <a href="order.html" class="main-button">
+    Order Now
+</a>
+
+                <div style="margin-top: 70px;">
+                    <a href="menu.html" class="back-button">
+    ← Back to Menu
+</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+<script>
+function changeQuantity(amount) {
+    const quantity = document.getElementById("quantity");
+    let value = Number(quantity.value) + amount;
+
+    if (value < 1) {
+        value = 1;
+    }
+
+    quantity.value = value;
+}
+
+function addToCart() {
+    const quantity = Number(document.getElementById("quantity").value);
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.name === "Banana Cinnamon Ice Cream");
+
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            name: "Banana Cinnamon Ice Cream",
+            price: 5,
+            quantity: quantity
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart!");
+}
+</script>
+</html>

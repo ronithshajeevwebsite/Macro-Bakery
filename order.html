@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Your Cart | Macro Bakery</title> <link rel="stylesheet" href="style.css"> </head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <a href="index.html">MACRO BAKERY</a>
+    </div>
+
+    <div class="nav-links">
+    <a href="menu.html">Menu</a>
+    <a href="order.html">Order</a>
+    <a href="about.html">About Us</a>
+</div>
+</nav>
+
+<main class="cart-page">
+
+    <div class="menu-heading">
+        <p class="small-title">YOUR ORDER</p>
+        <h1>Your Cart</h1>
+        <p>Review your treats before placing your order.</p>
+    </div>
+
+    <div id="cart-container"></div>
+
+</main>
+
+<footer>
+    <p>© 2026 Macro Bakery</p>
+</footer>
+
+
+<script>
+
+    function loadCart() {
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const container = document.getElementById("cart-container");
+
+        if (cart.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">🛒</div>
+
+                    <h2>Your cart is empty.</h2>
+
+                    <p>
+                        Add some delicious treats from our menu.
+                    </p>
+
+                    <a href="menu.html" class="main-button">
+                        Browse Menu
+                    </a>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        let total = 0;
+
+        let cartHTML = `
+            <div class="cart-box">
+
+                <div class="cart-heading-row">
+                    <div>
+                        <p class="small-title">YOUR TREATS</p>
+                        <h2>Your Items</h2>
+                    </div>
+                </div>
+        `;
+
+
+        cart.forEach((item, index) => {
+
+            const itemTotal = item.price * item.quantity;
+
+            total += itemTotal;
+
+            cartHTML += `
+                <div class="cart-item">
+
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>$${item.price.toFixed(2)} each</p>
+                    </div>
+
+                    <div class="cart-quantity">
+
+                        <button
+                            type="button"
+                            onclick="changeCartQuantity(${index}, -1)"
+                            aria-label="Decrease quantity">
+                            −
+                        </button>
+
+                        <span>${item.quantity}</span>
+
+                        <button
+                            type="button"
+                            onclick="changeCartQuantity(${index}, 1)"
+                            aria-label="Increase quantity">
+                            +
+                        </button>
+
+                    </div>
+
+                    <div class="cart-item-total">
+                        $${itemTotal.toFixed(2)}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="remove-button"
+                        onclick="removeItem(${index})">
+                        Remove
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+
+        cartHTML += `
+
+                <div class="cart-total">
+
+                    <span>Total</span>
+
+                    <strong>
+                        $${total.toFixed(2)}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="checkout-section">
+
+                <div class="checkout-heading">
+                    <p class="small-title">ALMOST THERE</p>
+                    <h2>Checkout</h2>
+                    <p>
+                        Enter your details and choose when
+                        you'd like to pick up your order.
+                    </p>
+                </div>
+
+                <form id="checkout-form">
+
+                    <label for="customer-name">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customer-name"
+                        placeholder="Your name"
+                        autocomplete="name"
+                        required
+                    >
+
+
+                    <label for="contact">
+                        Contact
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contact"
+                        placeholder="Phone or email"
+                        autocomplete="email"
+                        required
+                    >
+
+
+                    <div class="pickup-grid">
+
+                        <div>
+
+                            <label for="pickup-day">
+                                Preferred pickup day
+                            </label>
+
+                            <select
+                                id="pickup-day"
+                                required>
+                                <option value="">
+                                    Select a day
+                                </option>
+                            </select>
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="pickup-time">
+                                Preferred pickup time
+                            </label>
+
+                            <select
+                                id="pickup-time"
+                                required>
+
+                                <option value="">
+                                    Select a time
+                                </option>
+
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="10:30 AM">10:30 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="11:30 AM">11:30 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="12:30 PM">12:30 PM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="1:30 PM">1:30 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="2:30 PM">2:30 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="3:30 PM">3:30 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                                <option value="4:30 PM">4:30 PM</option>
+                                <option value="5:00 PM">5:00 PM</option>
+                                <option value="5:30 PM">5:30 PM</option>
+                                <option value="6:00 PM">6:00 PM</option>
+                                <option value="6:30 PM">6:30 PM</option>
+                                <option value="7:00 PM">7:00 PM</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <label for="notes">
+                        Special requests
+                    </label>
+
+                    <textarea
+                        id="notes"
+                        placeholder="Anything we should know?"
+                    ></textarea>
+
+
+                    <button
+                        type="submit"
+                        class="main-button checkout-button">
+                        Place Order
+                    </button>
+
+                </form>
+
+            </div>
+
+        `;
+
+
+        container.innerHTML = cartHTML;
+
+        setupPickupDays();
+
+        document
+            .getElementById("checkout-form")
+            .addEventListener("submit", placeOrder);
+
+    }
+
+
+    function setupPickupDays() {
+
+        const select = document.getElementById("pickup-day");
+
+        const today = new Date();
+
+        /*
+         * Creates the next 30 available pickup days.
+         * The year is NOT displayed to the customer.
+         */
+
+        for (let i = 0; i < 30; i++) {
+
+            const date = new Date(today);
+
+            date.setDate(today.getDate() + i);
+
+            const month = date.toLocaleString("en-US", {
+                month: "long"
+            });
+
+            const day = date.getDate();
+
+            const value =
+                date.getFullYear() +
+                "-" +
+                String(date.getMonth() + 1).padStart(2, "0") +
+                "-" +
+                String(day).padStart(2, "0");
+
+            const option = document.createElement("option");
+
+            option.value = value;
+
+            option.textContent = `${month} ${day}`;
+
+            select.appendChild(option);
+        }
+
+    }
+
+
+    function changeCartQuantity(index, amount) {
+
+        let cart =
+            JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart[index].quantity += amount;
+
+
+        if (cart[index].quantity < 1) {
+
+            cart.splice(index, 1);
+
+        }
+
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        loadCart();
+
+    }
+
+
+    function removeItem(index) {
+
+        let cart =
+            JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart.splice(index, 1);
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        loadCart();
+
+    }
+
+
+    function placeOrder(event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("customer-name").value;
+
+        const pickupDay =
+            document.getElementById("pickup-day");
+
+        const pickupTime =
+            document.getElementById("pickup-time");
+
+        const selectedDay =
+            pickupDay.options[pickupDay.selectedIndex].text;
+
+        const selectedTime =
+            pickupTime.value;
+
+
+        /*
+         * This is where you could later connect
+         * the order to an email, database, etc.
+         */
+
+        showOrderNotification(
+            name,
+            selectedDay,
+            selectedTime
+        );
+
+
+        localStorage.removeItem("cart");
+
+        setTimeout(() => {
+            loadCart();
+        }, 3200);
+
+    }
+
+
+    function showOrderNotification(
+        name,
+        pickupDay,
+        pickupTime
+    ) {
+
+        const notification =
+            document.createElement("div");
+
+        notification.className =
+            "cart-notification order-success";
+
+        notification.innerHTML = `
+
+            <div class="cart-check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Order Submitted
+                </strong>
+
+                <span>
+                    Thanks, ${name}! Pickup: ${pickupDay} at ${pickupTime}.
+                </span>
+
+            </div>
+
+        `;
+
+        document.body.appendChild(notification);
+
+
+        setTimeout(() => {
+
+            notification.classList.add("hide");
+
+        }, 2800);
+
+
+        setTimeout(() => {
+
+            notification.remove();
+
+        }, 3400);
+
+    }
+
+
+    loadCart();
+
+</script>
+
+</body>
+
+</html>

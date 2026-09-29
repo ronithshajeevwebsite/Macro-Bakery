@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Strawberry Parfait | Macro Bakery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Macro Bakery</div>
+
+        <div class="nav-links">
+    <a href="menu.html">Menu</a>
+    <a href="order.html">Order</a>
+    <a href="about.html">About Us</a>
+</div>
+    </nav>
+
+    <main class="product-page">
+
+        <div class="product-content">
+
+            <div class="product-image">
+                🍓
+            </div>
+
+            <div class="product-info">
+
+                <p class="small-title">
+                    YOGURT DELIGHTS
+                </p>
+
+                <h1>
+                    Strawberry Parfait
+                </h1>
+
+                <p>
+                    Creamy layers and bright strawberry
+                    flavor come together in this beautiful
+                    dessert-inspired parfait.
+                </p>
+
+                <p>
+                    Sweet strawberry flavor blends with a
+                    smooth, creamy texture for a refreshing
+                    treat that's delicious from the first
+                    spoonful to the last.
+                </p>
+
+                <h2>$6</h2>
+                <div class="quantity-box">
+    <label for="quantity">Quantity</label>
+
+    <div class="quantity-controls">
+        <button type="button" onclick="changeQuantity(-1)">−</button>
+
+        <input type="number" id="quantity" value="1" min="1">
+
+        <button type="button" onclick="changeQuantity(1)">+</button>
+    </div>
+
+    <button class="add-cart-button" onclick="addToCart()">
+        Add to Cart
+    </button>
+</div>
+                <a href="order.html" class="main-button">
+    Order Now
+</a>
+
+                <div style="margin-top: 70px;">
+                    <a href="menu.html" class="back-button">
+    ← Back to Menu
+</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+<script>
+function changeQuantity(amount) {
+    const quantity = document.getElementById("quantity");
+    let value = Number(quantity.value) + amount;
+
+    if (value < 1) {
+        value = 1;
+    }
+
+    quantity.value = value;
+}
+
+function addToCart() {
+    const quantity = Number(document.getElementById("quantity").value);
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.name === "Strawberry Parfait");
+
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            name: "Strawberry Parfait",
+            price: 6,
+            quantity: quantity
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart!");
+}
+</script>
+</html>

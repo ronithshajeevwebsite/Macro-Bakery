@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vanilla Bean Fudge Balls | Macro Bakery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Macro Bakery</div>
+
+        <div class="nav-links">
+    <a href="menu.html">Menu</a>
+    <a href="order.html">Order</a>
+    <a href="about.html">About Us</a>
+</div>
+    </nav>
+
+    <main class="product-page">
+
+        <div class="product-content">
+
+            <div class="product-image">
+                🍦
+            </div>
+
+            <div class="product-info">
+
+                <p class="small-title">
+                    PROTEIN BALLS
+                </p>
+
+                <h1>
+                    Vanilla Bean Fudge Balls
+                </h1>
+
+                <p>
+                    Smooth, creamy, and wonderfully rich,
+                    our Vanilla Bean Fudge Balls bring
+                    together sweet vanilla flavor and a
+                    soft, fudgy texture in every bite.
+                </p>
+
+                <p>
+                    With a delicate vanilla aroma and a
+                    satisfying dessert-like taste, these
+                    bite-sized treats are perfect whenever
+                    you're craving something sweet.
+                </p>
+                <h2>$7 / 6</h2>
+                <div class="quantity-box">
+    <label for="quantity">Quantity</label>
+
+    <div class="quantity-controls">
+        <button type="button" onclick="changeQuantity(-1)">−</button>
+
+        <input type="number" id="quantity" value="1" min="1">
+
+        <button type="button" onclick="changeQuantity(1)">+</button>
+    </div>
+
+    <button class="add-cart-button" onclick="addToCart()">
+        Add to Cart
+    </button>
+</div>
+
+                <a href="order.html" class="main-button">
+    Order Now
+</a>
+
+                <div style="margin-top: 70px;">
+                    <a href="menu.html" class="back-button">
+    ← Back to Menu
+</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
+<script>
+function changeQuantity(amount) {
+    const quantity = document.getElementById("quantity");
+    let value = Number(quantity.value) + amount;
+
+    if (value < 1) {
+        value = 1;
+    }
+
+    quantity.value = value;
+}
+
+function addToCart() {
+    const quantity = Number(document.getElementById("quantity").value);
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.name === "Vanilla Bean Fudge Balls");
+
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            name: "Vanilla Bean Fudge Balls",
+            price: 7,
+            quantity: quantity
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart!");
+}
+</script>
